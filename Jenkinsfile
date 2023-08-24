@@ -6,8 +6,10 @@ node {
         }
     }
     stage('Build') {
-        steps {
+        if (env.BRANCH_NAME == 'react-app') {
             sh 'npm install'
+        } else {
+            echo 'I execute elsewhere'
         }
     }
 }
