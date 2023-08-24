@@ -1,20 +1,12 @@
 node {
     stage('Build') { 
-        try {
+        steps {
             sh 'npm install'
-        }
-        catch (exc) {
-            echo 'npm error!!'
-            throw
         }
     }
     stage('Test') {
-        try {
+        steps {
             sh './jenkins/scripts/test.sh'
-        }
-        catch (exc) {
-            echo 'test error!!'
-            throw
         }
     }
 }
