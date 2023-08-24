@@ -8,8 +8,6 @@ node {
     stage('Build') {
         if (env.BRANCH_NAME == 'react-app') {
             sh 'npm install'
-        } else {
-            echo 'I execute elsewhere'
         }
     }
 }
