@@ -6,6 +6,8 @@ node {
         }
     }
     stage('Build') {
-        sh 'npm install'
+        steps {
+            sh 'npm install'
+        }
     }
 }
