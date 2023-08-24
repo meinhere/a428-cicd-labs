@@ -1,5 +1,5 @@
 node {
     stage('Build') {
-        sh 'npm install'
+        bat label: '', script: 'npm install'
     }
 }
