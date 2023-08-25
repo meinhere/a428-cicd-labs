@@ -11,4 +11,11 @@ node {
             sh 'npm install'
         }
     }
+    stage('Test') {
+        // Run the build steps inside the Docker container
+        docker.image(dockerImage).inside(dockerArgs) {
+            // Execute 'npm install' command
+            sh './jenkins/scripts/test.sh'
+        }
+    }
 }
