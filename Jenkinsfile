@@ -14,8 +14,15 @@ node {
     stage('Test') {
         // Run the build steps inside the Docker container
         docker.image(dockerImage).inside(dockerArgs) {
-            // Execute 'npm install' command
             sh './jenkins/scripts/test.sh'
+        }
+    }
+    stage('Deploy') {
+        // Run the build steps inside the Docker container
+        docker.image(dockerImage).inside(dockerArgs) {
+            sh './jenkins/scripts/deliver.sh'
+            input message: 'Sudah selesai menggunakan React App? (Klik "Proceed" untuk mengakhiri)'
+            sh './jenkins/scripts/kill.sh'
         }
     }
 }
