@@ -27,10 +27,19 @@ node {
         // Run the build steps inside the Docker container
         docker.image(dockerImage).inside(dockerArgs) {
             sh './jenkins/scripts/deliver.sh'
-            timeout(time: 1, unit: 'MINUTES')  {
-                node {
-                    sh './jenkins/scripts/kill.sh'
+            def proceed = true
+            try {
+                timeout(time: 1, unit: 'MINUTES')  {
+                    node {
+                        sh './jenkins/scripts/kill.sh'
+                    }
                 }
+            } catch (err) {
+                proceed = false
+            }
+
+            if (proceed) {
+                currentBuild.result = "SUCCESS"
             }
         }
     }
