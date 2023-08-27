@@ -17,12 +17,17 @@ node {
             sh './jenkins/scripts/test.sh'
         }
     }
-    stage('Deploy') {
+    stage('Manual Approval') {
         // Run the build steps inside the Docker container
         docker.image(dockerImage).inside(dockerArgs) {
-            sh './jenkins/scripts/deliver.sh'
-            input message: 'Sudah selesai menggunakan React App? (Klik "Proceed" untuk mengakhiri)'
-            sh './jenkins/scripts/kill.sh'
+            input message: 'Lanjutkan ke tahap Deploy?'
+            stage('Deploy') {
+                docker.image(dockerImage).inside(dockerArgs) {
+                    sh './jenkins/scripts/deliver.sh'
+                    input message: 'Sudah selesai menggunakan React App? (Klik "Proceed" untuk mengakhiri)'
+                    sh './jenkins/scripts/kill.sh'
+                }
+            }
         }
     }
 }
