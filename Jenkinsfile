@@ -28,10 +28,10 @@ node {
         docker.image(dockerImage).inside(dockerArgs) {
             sh './jenkins/scripts/deliver.sh'
             timeout(time: 1, unit: 'MINUTES')  {
-
+                node {
+                    sh './jenkins/scripts/kill.sh'
+                }
             }
-            sh './jenkins/scripts/kill.sh'
-
         }
     }
 }
