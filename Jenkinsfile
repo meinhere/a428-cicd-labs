@@ -27,8 +27,9 @@ node {
         // Run the build steps inside the Docker container
         docker.image(dockerImage).inside(dockerArgs) {
             sh './jenkins/scripts/deliver.sh'
-            input message: 'Sudah selesai menggunakan React App? (Klik "Proceed" untuk mengakhiri)'
-            sh './jenkins/scripts/kill.sh'
+            timeout(time: 1, unit: 'MINUTES') {
+                sh './jenkins/scripts/kill.sh'
+            }
         }
     }
 }
